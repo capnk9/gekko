@@ -1,0 +1,94 @@
+//@version=3
+strategy("RSI BULL BEAR + ADX")
+
+dirmov(len) =>
+	up = change(high)
+	down = -change(low)
+	truerange = rma(tr, len)
+	plus = fixnan(100 * rma(up > down and up > 0 ? up : 0, len) / truerange)
+	minus = fixnan(100 * rma(down > up and down > 0 ? down : 0, len) / truerange)
+	[plus, minus]
+
+adx(len) =>
+	[plus, minus] = dirmov(len)
+	sum = plus + minus
+	100 * rma(abs(plus - minus) / (sum == 0 ? 1 : sum), len)
+
+SMA_long = input(132)
+SMA_short = input(35)
+LT_long = input(1728)
+LT_short = input(432)
+
+// RSI BULL / BEAR
+BULL_RSI = input(19)
+BULL_RSI_high = input(85)
+BULL_RSI_low = input(49)
+BEAR_RSI = input(15)
+BEAR_RSI_high = input(49)
+BEAR_RSI_low = input(21)
+
+//# MODIFY RSI (depending on ADX)
+BULL_MOD_high = input(2)
+BULL_MOD_low = input(-3)
+BEAR_MOD_high = input(15)
+BEAR_MOD_low = input(-5)
+
+// ADX
+ADX = input(4)
+ADX_high = input(70)
+ADX_low = input(41)
+
+maSlow = sma(close, SMA_long)
+maFast = sma(close, SMA_short)
+rsiBull = rsi(close, BULL_RSI)
+rsiBear = rsi(close, BEAR_RSI)
+
+myADX = adx(ADX)
+
+[rsi, rsi_hi, rsi_low] = if maFast < maSlow
+
+    // BEAR TREND
+    tmp_RSI_high = if myADX > ADX_high
+        BEAR_RSI_high + BEAR_MOD_high
+    else
+        BEAR_RSI_high
+
+    tmp_RSI_low = if myADX < ADX_low
+        BEAR_RSI_low + BEAR_MOD_low
+    else
+        BEAR_RSI_low
+
+    [rsiBear, tmp_RSI_high, tmp_RSI_low]
+else
+
+    // BULL TREND
+    tmp_RSI_high = if myADX > ADX_high
+        BULL_RSI_high + BULL_MOD_high
+    else
+        BULL_RSI_high
+
+    tmp_RSI_low = if myADX < ADX_low
+        BULL_RSI_low + BULL_MOD_low
+    else
+        BULL_RSI_low
+
+    [rsiBull, tmp_RSI_high, tmp_RSI_low]
+
+trend = red
+trend := trend[1]
+
+if (rsi < rsi_low)
+    trend := green
+if (rsi > rsi_hi)
+    trend := red
+
+plot(rsi, "RSI", color=trend)
+hi = plot(rsi_hi, "RSI HIGH" )
+lo = plot(rsi_low, "RSI LOW")
+fill(hi, lo)
+
+entry() => crossunder(rsi, rsi_low)
+exit() => crossover(rsi, rsi_hi)
+
+strategy.entry("Buy", true, when = entry())
+strategy.close("Buy", when = exit())

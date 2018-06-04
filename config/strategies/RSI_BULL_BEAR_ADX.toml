@@ -1,0 +1,156 @@
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 16
+BULL_high = 82
+BULL_low = 59
+BULL_mod_high = 5
+BULL_mod_low = -2
+
+BEAR_rsi = 14
+BEAR_high = 45
+BEAR_low = 21
+BEAR_mod_high = 17
+BEAR_mod_low  = -5
+
+ADX_adx = 3
+ADX_high = 70
+ADX_low = 41
+
+
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 23
+BULL_high = 74
+BULL_low = 61
+BULL_mod_high = -2
+BULL_mod_low = -2
+
+BEAR_rsi = 14
+BEAR_high = 43
+BEAR_low = 13
+BEAR_mod_high = 2
+BEAR_mod_low  = 7
+
+ADX_adx = 7
+ADX_high = 68
+ADX_low = 41
+
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 16
+BULL_high = 82
+BULL_low = 59
+BULL_mod_high = 6
+BULL_mod_low = 2
+
+BEAR_rsi = 15
+BEAR_high = 43
+BEAR_low = 21
+BEAR_mod_high = 17
+BEAR_mod_low  = -5
+
+ADX_adx = 5
+ADX_high = 70
+ADX_low = 41
+
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 23
+BULL_high = 74
+BULL_low = 58
+BULL_mod_high = -2
+BULL_mod_low = -4
+
+BEAR_rsi = 14
+BEAR_high = 43
+BEAR_low = 13
+BEAR_mod_high = 0
+BEAR_mod_low  = 7
+
+ADX_adx = 7
+ADX_high = 70
+ADX_low = 40
+
+#Good long trend
+SMA_long = 1728
+SMA_short = 432
+
+BULL_rsi = 16
+BULL_high = 76
+BULL_low = 59
+BULL_mod_high = 10
+BULL_mod_low = -20
+
+BEAR_rsi = 14
+BEAR_high = 57
+BEAR_low = 19
+BEAR_mod_high = 0
+BEAR_mod_low  = 0
+
+ADX_adx = 5
+ADX_high = 65
+ADX_low = 54
+
+#94% on TV ETH
+SMA_long = 134
+SMA_short = 85
+
+BULL_rsi = 17
+BULL_high = 82
+BULL_low = 50
+BULL_mod_high = 5
+BULL_mod_low = -2
+
+BEAR_rsi = 15
+BEAR_high = 44
+BEAR_low = 21
+BEAR_mod_high = 17
+BEAR_mod_low  = -5
+
+ADX_adx = 3
+ADX_high = 70
+ADX_low = 41
+
+#prod IOT
+SMA_long = 132
+SMA_short = 35
+
+BULL_rsi = 19
+BULL_high = 85
+BULL_low = 49
+BULL_mod_high = 2
+BULL_mod_low = -3
+
+BEAR_rsi = 15
+BEAR_high = 49
+BEAR_low = 21
+BEAR_mod_high = 15
+BEAR_mod_low  = -5
+
+ADX_adx = 4
+ADX_high = 70
+ADX_low = 41
+
+#236% on TV IOT
+SMA_long = 138
+SMA_short = 61
+
+BULL_rsi = 11
+BULL_high = 85
+BULL_low = 49
+BULL_mod_high = 1
+BULL_mod_low = -3
+
+BEAR_rsi = 10
+BEAR_high = 40
+BEAR_low = 15
+BEAR_mod_high = 7
+BEAR_mod_low  = -2
+
+ADX_adx = 8
+ADX_high = 62
+ADX_low = 48

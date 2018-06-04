@@ -1,0 +1,11 @@
+threshold_buy = 4.0
+threshold_sell = -4.0
+method = 'nesterov' #Options are 'sgd', 'adagrad', 'windowgrad', 'nesterov'
+learning_rate = 0.1
+momentum = 0.95
+decay = 0.10
+stoploss_enabled = true
+stoploss_threshold = 0.93
+hodl_threshold = 1
+price_buffer_len = 100
+min_predictions = 1000

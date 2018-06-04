@@ -1,0 +1,93 @@
+May 11 2017
+
+Relative profit on evaluation dataset:
+        Test on random candles...  relativeProfit: 780257.357   nbTrades: 516.0 sharpe: 0.07
+~~~~~~~~~~~~~~~~~~
+ 30316.391 final profit ~~~~
+ -- Settings for Gekko config.js --
+{
+  "decay": 0.10060000000000001,
+  "learning_rate": 0.07,
+  "min_predictions": 760.0,
+  "momentum": 0.9044,
+  "price_buffer_len": 76.0,
+  "stoploss_threshold": 0.94116,
+  "threshold_buy": 4.12,
+  "threshold_sell": -4.6240000000000006
+}
+ -- Settings for Gekko --ui webpage --
+decay = 0.10060000000000001
+learning_rate = 0.07
+min_predictions = 760.0
+momentum = 0.9044
+price_buffer_len = 76.0
+stoploss_threshold = 0.94116
+threshold_buy = 4.12
+threshold_sell = -4.6240000000000006
+
+Remember to check MAX and MIN values for each parameter.
+        results may improve with extended ranges.
+
+                .RUN ENDS.
+Run took 13045 seconds.
+
+
+Relative profit on evaluation dataset:
+        Test on random candles...  relativeProfit: 84381072.358         nbTrades: 620.0       sharpe: 0.06
+~~~~~~~~~~~~~~~~~~
+ 27704.413 final profit ~~~~
+ -- Settings for Gekko config.js --
+{
+  "decay": 0.097,
+  "learning_rate": 0.0916,
+  "min_predictions": 904.0,
+  "momentum": 0.6878000000000001,
+  "price_buffer_len": 80.8,
+  "stoploss_threshold": 0.9579000000000001,
+  "threshold_buy": 3.472,
+  "threshold_sell": -4.24
+}
+ -- Settings for Gekko --ui webpage --
+decay = 0.097
+learning_rate = 0.0916
+min_predictions = 904.0
+momentum = 0.6878000000000001
+price_buffer_len = 80.8
+stoploss_threshold = 0.9579000000000001
+threshold_buy = 3.472
+threshold_sell = -4.24
+
+
+Relative profit on evolution dataset: 17287.828
+Current parameters are viable.
+
+Relative profit on evaluation dataset:
+        Test on random candles...  relativeProfit: 281342425.096        nbTrades: 871.0 sharpe: 0.05
+~~~~~~~~~~~~~~~~~~
+ 17287.828 final profit ~~~~
+ -- Settings for Gekko config.js --
+{
+  "decay": 0.08080000000000001,
+  "learning_rate": 0.1168,
+  "min_predictions": 898.0,
+  "momentum": 0.9442999999999999,
+  "price_buffer_len": 76.0,
+  "stoploss_threshold": 0.9355800000000001,
+  "threshold_buy": 2.944,
+  "threshold_sell": -3.304
+}
+ -- Settings for Gekko --ui webpage --
+decay = 0.08080000000000001
+learning_rate = 0.1168
+min_predictions = 898.0
+momentum = 0.9442999999999999
+price_buffer_len = 76.0
+stoploss_threshold = 0.9355800000000001
+threshold_buy = 2.944
+threshold_sell = -3.304
+
+Remember to check MAX and MIN values for each parameter.
+        results may improve with extended ranges.
+
+                .RUN ENDS.
+Run took 15521 seconds.

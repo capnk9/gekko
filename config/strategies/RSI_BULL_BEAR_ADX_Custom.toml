@@ -1,0 +1,38 @@
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 16
+BULL_high = 82
+BULL_low = 59
+BULL_mod_high = 5
+BULL_mod_low = -2
+
+BEAR_rsi = 14
+BEAR_high = 45
+BEAR_low = 21
+BEAR_mod_high = 17
+BEAR_mod_low  = -5
+
+ADX_adx = 3
+ADX_high = 70
+ADX_low = 41
+
+
+SMA_long = 165
+SMA_short = 33
+
+BULL_rsi = 23
+BULL_high = 74
+BULL_low = 61
+BULL_mod_high = -2
+BULL_mod_low = -2
+
+BEAR_rsi = 14
+BEAR_high = 43
+BEAR_low = 13
+BEAR_mod_high = 2
+BEAR_mod_low  = 7
+
+ADX_adx = 7
+ADX_high = 68
+ADX_low = 41
