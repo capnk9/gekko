@@ -4,6 +4,7 @@
     table(v-if='roundtrips.length')
       thead
         tr
+          th Order Type
           th Entry at (UTC)
           th Exit at (UTC)
           th Exposure
@@ -12,6 +13,7 @@
           th P&amp;L
           th Profit
         tr(v-for='rt in roundtrips')
+          td {{ rt.entryOrderType }}
           td {{ fmt(rt.entryAt) }}
           td {{ fmt(rt.exitAt) }}
           td {{ diff(rt.duration) }}

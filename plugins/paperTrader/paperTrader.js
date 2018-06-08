@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const util = require('../../core/util');
+var log = require('../../core/log.js');
 const ENV = util.gekkoEnv();
 
 const config = util.getConfig();
@@ -35,6 +36,8 @@ PaperTrader.prototype.relayTrade = function(advice) {
     action = 'sell';
   else if(what === 'long')
     action = 'buy';
+ else if(what === 'close')
+    action = 'close';
   else
     return;
 
@@ -74,17 +77,43 @@ PaperTrader.prototype.updatePosition = function(advice) {
   // virtually trade all {currency} to {asset}
   // at the current price (minus fees)
   if(what === 'long') {
+    // close short if exist
+    if(this.portfolio.asset < 0) {
+        this.portfolio.currency += this.portfolio.asset * price ;
+        this.portfolio.asset = 0;
+        this.trades++;
+    }
     this.portfolio.asset += this.extractFee(this.portfolio.currency / price);
     this.portfolio.currency = 0;
-    this.trades++;
   }
 
-  // virtually trade all {currency} to {asset}
+  // virtually trade all {asset} to {asset}
   // at the current price (minus fees)
   else if(what === 'short') {
-    this.portfolio.currency += this.extractFee(this.portfolio.asset * price);
-    this.portfolio.asset = 0;
-    this.trades++;
+    // close long if exist
+    if(this.portfolio.asset > 0) {
+        this.portfolio.currency += this.extractFee(this.portfolio.asset * price);
+        this.portfolio.asset = 0;
+    }     
+    if(this.portfolio.asset == 0) {
+        this.portfolio.asset = -this.portfolio.currency / price;
+        this.portfolio.currency += this.portfolio.currency;
+    }
+  }
+
+  else if (what === 'close') {
+      // close short if exist
+     if(this.portfolio.asset < 0) {
+        this.portfolio.currency += this.portfolio.asset * price ;
+        this.portfolio.asset = 0;
+        this.trades++;
+        //log.debug("SHORT", "end", this.portfolio.currency, this.portfolio.asset, price)      
+     }
+     if(this.portfolio.asset > 0) {
+        this.portfolio.currency += this.extractFee(this.portfolio.asset * price);
+        this.portfolio.asset = 0;
+        //log.debug("LONG", "end", this.portfolio.currency, this.portfolio.asset, price)      
+     }     
   }
 }
 

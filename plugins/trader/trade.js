@@ -77,17 +77,25 @@ class Trade{
     let act = () => {
       var amount, price;
       if(this.action === 'BUY') {
-        amount = this.portfolio.getBalance(this.currency) / this.portfolio.ticker.ask;
-        if(amount > 0){
-            price = this.portfolio.ticker.bid;
-            this.buy(amount, price);
-        }
+        const amount = this.portfolio.getBalance(this.currency) / this.portfolio.ticker.ask;
+        if(amount > 0)
+            this.buy(amount);
+        else 
+            log.debug("no money for margin selling");
       } else if(this.action === 'SELL') {
-        amount = this.portfolio.getBalance(this.asset) - this.keepAsset;
-        if(amount > 0){
-            price = this.portfolio.ticker.ask;
-            this.sell(amount, price);
-        }
+        const amount = this.portfolio.getBalance(this.currency) / this.portfolio.ticker.ask;
+        if(amount > 0)
+            this.sell(amount);
+        else
+            log.debug("no money for margin selling");
+     } else if(this.action === 'CLOSE') {
+        const asset_amount = this.portfolio.getBalance(this.asset);
+        if(asset_amount < 0) 
+            this.buy(-asset_amount);
+        else if (asset_amount > 0)
+            this.sell(asset_amount);
+        else 
+            log.debug("nothing to close");
       }
     }
 
@@ -101,9 +109,9 @@ class Trade{
   // first do a quick check to see whether we can buy
   // the asset, if so BUY and keep track of the order
   // (amount is in asset quantity)
-  buy(amount, price) {
+  buy(amount) {
+    const  price = this.portfolio.ticker.bid;
     let minimum = 0;
-
     let process = (err, order) => {
       if(!this.isActive || this.isDeactivating){
         return log.debug(this.action, "trade class is no longer active")
@@ -120,7 +128,6 @@ class Trade{
           this.exchange.name
         );
       }
-
       log.info(
         'attempting to BUY',
         order.amount,
@@ -130,7 +137,6 @@ class Trade{
         'price:',
         order.price
       );
-
       this.exchange.buy(order.amount, order.price, _.bind(this.noteOrder,this) );
     }
 
@@ -145,7 +151,8 @@ class Trade{
   // first do a quick check to see whether we can sell
   // the asset, if so SELL and keep track of the order
   // (amount is in asset quantity)
-  sell(amount, price) {
+  sell(amount) {
+    const price = this.portfolio.ticker.ask;
     let minimum = 0;
     let process = (err, order) => {
 
@@ -156,7 +163,7 @@ class Trade{
       // if order to small
       if (!order.amount || order.amount < minimum) {
         return log.warn(
-          'wanted to buy',
+          'wanted to sell',
           this.currency,
           'but the amount is too small ',
           '(' + parseFloat(amount).toFixed(8) + ' @',
@@ -307,9 +314,9 @@ class Trade{
 
   getMinimum(price) {
     if(this.minimalOrder.unit === 'currency')
-      return minimum = this.minimalOrder.amount / price;
+      return this.minimalOrder.amount / price;
     else
-      return minimum = this.minimalOrder.amount;
+      return this.minimalOrder.amount;
   }
 }
 

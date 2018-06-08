@@ -49,6 +49,15 @@ Trader.prototype.processAdvice = function(advice) {
       'Selling ', config.trader.asset
     );
     this.manager.trade('SELL');
+  } else if(advice.recommendation == 'close') {
+    log.debug("CLOSES")
+    log.info(
+      'Trader',
+      'Received advice to close position',
+      'Selling ', config.trader.asset
+    );
+    this.manager.trade('CLOSE');
+
   }
 }
 

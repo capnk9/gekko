@@ -3,9 +3,11 @@ exports.trailingStopLoss = function() {
     let _percentage = null;
     let _prevPrice = null;
     let _stopLoss = null;
+    let _short = false;
     let _isActive = false;
 
-    function initSettings(percentage, currentPrice) {
+    function initSettings(percentage, currentPrice, short) {
+        _short = short;
         _percentage = (((100 - percentage)) / 100);
         _prevPrice = currentPrice;
         _stopLoss = calculateStopLoss(currentPrice);
@@ -14,16 +16,22 @@ exports.trailingStopLoss = function() {
 
     function isTriggered(currentPrice) {
         if(_isActive)
-            return (_stopLoss > currentPrice);
+            if(_short)
+                return (_stopLoss < currentPrice);
+            else
+                return (_stopLoss > currentPrice);
     }
 
     function calculateStopLoss(currentPrice) {
-        return _percentage * currentPrice;
+        if(_short)
+            return currentPrice / _percentage;
+        else
+            return _percentage * currentPrice;
     };
 
     function resetSettings() {
         _percentage, _prevPrice, _percentage, _stopLoss = null;
-        _isActive = false;
+        _isActive, _short = false;
     };
     
     function printVariables() {
@@ -32,6 +40,7 @@ exports.trailingStopLoss = function() {
         Percent: ${_percentage}
         Previous Price: ${_prevPrice}
         Stop Loss: ${_stopLoss}
+        Short: ${_short}
         Active : ${_isActive}
         ----------------------------;
         `)

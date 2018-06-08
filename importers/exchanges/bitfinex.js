@@ -76,7 +76,7 @@ var fetch = () => {
     // We need to slow this down to prevent hitting the rate limits
     setTimeout(() => {
       fetcher.getTrades(lastTimestamp, handleFetch);
-    }, 2500);
+    }, 2700);
   } else {
     lastTimestamp = from.valueOf();
     batch_start = moment(from);

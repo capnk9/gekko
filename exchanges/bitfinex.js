@@ -64,7 +64,7 @@ Trader.prototype.getPortfolio = function(callback) {
     if (err) return callback(err);
 
     // We are only interested in funds in the "exchange" wallet
-    data = data.filter(c => c.type === 'exchange');
+    data = data.filter(c => c.type === 'trading');
 
     const asset = _.find(data, c => c.currency.toUpperCase() === this.asset);
     const currency = _.find(data, c => c.currency.toUpperCase() === this.currency);
@@ -85,15 +85,30 @@ Trader.prototype.getPortfolio = function(callback) {
       currencyAmount = 0;
     }
 
-    const portfolio = [
-      { name: this.asset, amount: assetAmount },
-      { name: this.currency, amount: currencyAmount },
-    ];
+    let processPositions = (err, operations) => {
+        if(err) return callback(err);
+        if(operations == undefined) {
+            log.error("got undefined operations list", err);
+            return callback()
+        }
+       
+        operations.forEach((operation) => {
+            if(operation.symbol.toUpperCase().substr(0,3) == this.asset) {
+                assetAmount += parseFloat(operation.amount)
+            }
+        })
 
-    callback(undefined, portfolio);
+        const portfolio = [
+              { name: this.asset, amount: assetAmount},
+              { name: this.currency, amount: currencyAmount },
+            ];
+       
+        callback(undefined, portfolio);
+    };
+    this.bitfinex.active_positions(this.handleResponse('getPortfolio', processPositions))
   };
 
-  let handler = (cb) => this.bitfinex.wallet_balances(this.handleResponse('getPortfolio', cb));
+  let handler = (cb) => this.bitfinex.wallet_balances(this.handleResponse('getPortfolio', cb))
   util.retryCustom(retryForever, _.bind(handler, this), _.bind(process, this));
 }
 
@@ -118,20 +133,21 @@ Trader.prototype.getFee = function(callback) {
     callback(undefined, makerFee / 100);
 }
 
-Trader.prototype.submit_order = function(type, amount, price, callback) {
+Trader.prototype.submit_order = function(side, amount, price, callback, type) {
   let process = (err, data) => {
     if (err) return callback(err);
 
     callback(err, data.order_id);
   }
 
+
   amount = Math.floor(amount*100000000)/100000000;
   let handler = (cb) => this.bitfinex.new_order(this.pair,
     amount + '',
     price + '',
     this.name.toLowerCase(),
+    side,
     type,
-    'exchange limit',
     this.handleResponse('submitOrder', cb)
   );
 
@@ -139,11 +155,11 @@ Trader.prototype.submit_order = function(type, amount, price, callback) {
 }
 
 Trader.prototype.buy = function(amount, price, callback) {
-  this.submit_order('buy', amount, price, callback);
+  this.submit_order('buy', amount, price, callback, 'limit');
 }
 
 Trader.prototype.sell = function(amount, price, callback) {
-  this.submit_order('sell', amount, price, callback);
+  this.submit_order('sell', amount, price, callback, 'limit');
 }
 
 Trader.prototype.checkOrder = function(order_id, callback) {
