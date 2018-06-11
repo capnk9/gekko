@@ -203,7 +203,7 @@ var strat = {
 		{
 			this.resetTrend();
 			this.trend.direction = 'down';
-			this.advice('close');
+			this.advice('short');
 			if( this.debug ) log.info('Going short');
 		}
 		
