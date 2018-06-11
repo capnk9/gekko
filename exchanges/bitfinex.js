@@ -79,7 +79,7 @@ Trader.prototype.getPortfolio = function(callback) {
     }
 
     if(_.isObject(currency) && _.isNumber(+currency.available) && !_.isNaN(+currency.available))
-      currencyAmount = +currency.available;
+      currencyAmount = + currency.available * 2; //double available for margin
     else {
       log.error(`Bitfinex did not provide ${this.currency} amount, assuming 0`);
       currencyAmount = 0;
@@ -99,7 +99,7 @@ Trader.prototype.getPortfolio = function(callback) {
         })
 
         const portfolio = [
-              { name: this.asset, amount: assetAmount},
+              { name: this.asset, amount: assetAmount },
               { name: this.currency, amount: currencyAmount },
             ];
        

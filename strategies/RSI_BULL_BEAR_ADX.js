@@ -172,7 +172,11 @@ var strat = {
 	/* LONG */
 	long: function()
 	{
-		if( this.trend.direction !== 'up' ) // new trend? (only act on new trends)
+        if(this.trend.direction == 'down')
+        {	//if short close position first
+        	this.advice('close');
+        	this.resetTrend();
+        }else if( this.trend.direction !== 'up' ) // new trend? (only act on new trends)
 		{
 			this.resetTrend();
 			this.trend.direction = 'up';
@@ -191,12 +195,15 @@ var strat = {
 	/* SHORT */
 	short: function()
 	{
-		// new trend? (else do things)
-		if( this.trend.direction !== 'down' )
+        if(this.trend.direction == 'up')
+        {   // if long then close position first
+            this.advice('close');
+            this.resetTrend();
+        }else if( this.trend.direction !== 'down' )
 		{
 			this.resetTrend();
 			this.trend.direction = 'down';
-			this.advice('short');
+			this.advice('close');
 			if( this.debug ) log.info('Going short');
 		}
 		
